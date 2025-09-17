@@ -8,7 +8,6 @@ env: flexible
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 2
-  cool_down_period: 120s
   cpu_utilization:
     target_utilization: 0.6
 
