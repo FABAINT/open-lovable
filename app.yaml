@@ -4,12 +4,13 @@ runtime: nodejs22
 # Use flexible environment for better persistence and control
 env: flexible
 
-# Scaling configuration for stateful app
+# Scaling configuration for stateful app (Flexible environment)
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 2
-  target_cpu_utilization: 0.6
-  target_throughput_utilization: 0.6
+  cool_down_period: 120s
+  cpu_utilization:
+    target_utilization: 0.6
 
 # Resources configuration
 resources:
@@ -20,7 +21,7 @@ resources:
 # Environment variables
 env_variables:
   NODE_ENV: production
-  PORT: 3000
+  PORT: 8080
   NEXT_TELEMETRY_DISABLED: "1"
   # API Keys will be set via gcloud commands or Secret Manager
 
