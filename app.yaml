@@ -7,8 +7,7 @@ env: flexible
 # Scaling configuration for stateful app
 automatic_scaling:
   min_num_instances: 1
-  max_num_instances: 10
-  cool_down_period: 120s
+  max_num_instances: 2
   target_cpu_utilization: 0.6
   target_throughput_utilization: 0.6
 
@@ -21,7 +20,7 @@ resources:
 # Environment variables
 env_variables:
   NODE_ENV: production
-  PORT: 8080
+  PORT: 3000
   NEXT_TELEMETRY_DISABLED: "1"
   # API Keys will be set via gcloud commands or Secret Manager
 
