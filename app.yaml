@@ -20,7 +20,6 @@ resources:
 # Environment variables
 env_variables:
   NODE_ENV: production
-  PORT: 8080
   NEXT_TELEMETRY_DISABLED: "1"
   # API Keys will be set via gcloud commands or Secret Manager
 
