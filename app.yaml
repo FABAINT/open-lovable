@@ -1,5 +1,5 @@
 # Google App Engine configuration
-runtime: nodejs22
+runtime: nodejs24
 
 # Use flexible environment for better persistence and control
 env: flexible
