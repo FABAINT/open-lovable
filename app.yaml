@@ -1,0 +1,51 @@
+# Google App Engine configuration
+runtime: nodejs22
+
+# Use flexible environment for better persistence and control
+env: flexible
+
+# Scaling configuration for stateful app
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 10
+  cool_down_period: 120s
+  target_cpu_utilization: 0.6
+  target_throughput_utilization: 0.6
+
+# Resources configuration
+resources:
+  cpu: 1
+  memory_gb: 2
+  disk_size_gb: 10
+
+# Environment variables
+env_variables:
+  NODE_ENV: production
+  PORT: 8080
+  NEXT_TELEMETRY_DISABLED: "1"
+  # API Keys will be set via gcloud commands or Secret Manager
+
+# Network configuration for sandbox connectivity
+network:
+  # Allow outbound connections to Vercel/E2B APIs
+  name: default
+
+# Health check configuration
+readiness_check:
+  path: "/api/health"
+  check_interval_sec: 30
+  timeout_sec: 10
+  failure_threshold: 3
+  success_threshold: 2
+
+liveness_check:
+  path: "/api/health"
+  check_interval_sec: 30
+  timeout_sec: 10
+  failure_threshold: 3
+  success_threshold: 2
+
+# Enable sessions for state persistence
+runtime_config:
+  # Keep instances warm
+  operating_system: ubuntu22
