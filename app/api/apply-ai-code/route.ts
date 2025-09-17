@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import ms from 'ms';
 import type { SandboxState } from '@/types/sandbox';
 import type { ConversationState } from '@/types/conversation';
 
@@ -152,7 +153,19 @@ export async function POST(request: NextRequest) {
     }
     
     // Get the active sandbox or provider
-    const sandbox = global.activeSandbox || global.activeSandboxProvider;
+    let sandbox = global.activeSandbox || global.activeSandboxProvider;
+
+    // If using Vercel Sandbox SDK, set timeout to 45 minutes when creating
+    if (sandbox && sandbox.constructor?.name === 'VercelProvider' && typeof sandbox.create === 'function') {
+      // Re-create sandbox with increased timeout if not already set
+      if (!sandbox.timeout || sandbox.timeout < ms('45m')) {
+        sandbox = await sandbox.create({
+          ...sandbox.options,
+          timeout: ms('45m'),
+        });
+        global.activeSandbox = sandbox;
+      }
+    }
     
     // If no active sandbox, just return parsed results
     if (!sandbox) {
@@ -167,7 +180,8 @@ export async function POST(request: NextRequest) {
         explanation: parsed.explanation,
         structure: parsed.structure,
         parsedFiles: parsed.files,
-        message: `Parsed ${parsed.files.length} files successfully. Create a sandbox to apply them.`
+        message: `Parsed ${parsed.files.length} files successfully. Create a sandbox to apply them.`,
+        sandboxTimeout: '45m (settable via Vercel Sandbox SDK)'
       });
     }
     
