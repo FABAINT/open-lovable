@@ -14,7 +14,7 @@ RUN npm install -g pnpm@latest
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies based on the preferred package manager
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM base AS builder
