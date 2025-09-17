@@ -46,4 +46,5 @@ liveness_check:
 # Enable sessions for state persistence
 runtime_config:
   # Keep instances warm
-  operating_system: ubuntu22
+  operating_system: "ubuntu24"
+  runtime_version: "24"
