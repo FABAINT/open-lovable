@@ -34,8 +34,8 @@ RUN mkdir -p /app/data && \
 
 USER nextjs
 
-# App Engine uses PORT environment variable
-ENV PORT=8080
+# App Engine automatically provides PORT environment variable
+# ENV PORT is set by App Engine runtime
 ENV HOSTNAME="0.0.0.0"
 
 EXPOSE 8080
