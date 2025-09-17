@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - FIRECRAWL_API_KEY=${FIRECRAWL_API_KEY}
+        - SANDBOX_PROVIDER=${SANDBOX_PROVIDER:-vercel}
+        - VERCEL_OIDC_TOKEN=${VERCEL_OIDC_TOKEN}
+        - VERCEL_TEAM_ID=${VERCEL_TEAM_ID}
+        - VERCEL_PROJECT_ID=${VERCEL_PROJECT_ID}
+        - VERCEL_TOKEN=${VERCEL_TOKEN}
+        - E2B_API_KEY=${E2B_API_KEY}
+        - AI_GATEWAY_API_KEY=${AI_GATEWAY_API_KEY}
+        - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+        - OPENAI_API_KEY=${OPENAI_API_KEY}
+        - GEMINI_API_KEY=${GEMINI_API_KEY}
+        - GROQ_API_KEY=${GROQ_API_KEY}
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    restart: unless-stopped
+    
+  # Development service (optional)
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    env_file:
+      - .env.local
+    profiles:
+      - dev
